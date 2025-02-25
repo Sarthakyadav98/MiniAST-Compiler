@@ -15,6 +15,7 @@ private:
     void advance();
     void skipWhitespace();
     string readNumber();
+    char peek() const;
     
 public:
     Lexer(const string& text);
