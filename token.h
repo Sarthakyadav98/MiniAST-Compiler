@@ -5,16 +5,27 @@
 using namespace std;
 
 enum class TokenType {
+    // Literals
     NUMBER,
+
+    // Operators
     PLUS,
     MINUS,
-    STAR,
-    SLASH,
-    LPAREN,
-    RPAREN,
-    END,
+    MULTIPLY,
+    DIVIDE,
+
+    // Parentheses
+    LEFT_PAREN,
+    RIGHT_PAREN,
+
+    // Special tokens
+    END_OF_FILE,
     INVALID
 };
+
+
+
+
 
 struct Token {
     TokenType type;
