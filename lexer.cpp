@@ -23,10 +23,20 @@ void Lexer::skipWhitespace() {
 
 string Lexer::readNumber() {
     string result;
-    while (currentChar != '\0' && isdigit(currentChar)) {
+    
+    // Handle leading decimal point (e.g., .02)
+    if (currentChar == '.' && isdigit(peek())) {
+        result += '0';  // Add leading zero
         result += currentChar;
         advance();
     }
+    
+    // Read all digits and decimal points
+    while (currentChar != '\0' && (isdigit(currentChar) || currentChar == '.')) {
+        result += currentChar;
+        advance();
+    }
+    
     return result;
 }
 
@@ -37,6 +47,19 @@ char Lexer::peek() const {
     return input[pos + 1];
 }
 
+bool Lexer::isValidNumber(const string& num) const {
+    int decimalCount = 0;
+    for (char c : num) {
+        if (c == '.') {
+            decimalCount++;
+            if (decimalCount > 1) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 Token Lexer::nextToken() {
     while (currentChar != '\0') {
         if (isspace(currentChar)) {
@@ -44,8 +67,14 @@ Token Lexer::nextToken() {
             continue;
         }
         
-        if (isdigit(currentChar)) {
-            return Token(TokenType::NUMBER, readNumber());
+        // Handle numbers (including leading decimal like .02)
+        if (isdigit(currentChar) || (currentChar == '.' && isdigit(peek()))) {
+            string numStr = readNumber();
+            if (isValidNumber(numStr)) {
+                return Token(TokenType::NUMBER, numStr);
+            } else {
+                return Token(TokenType::INVALID, numStr);
+            }
         }
         
         if (currentChar == '+') {
