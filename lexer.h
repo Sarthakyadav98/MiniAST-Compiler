@@ -4,24 +4,23 @@
 #include "token.h"
 #include <string>
 #include <vector>
-using namespace std;
 
 class Lexer {
 private:
-    string input;
+    std::string input;
     size_t pos;
     char currentChar;
     
     void advance();
     void skipWhitespace();
-    string readNumber();
+    std::string readNumber();
     char peek() const;
-    bool isValidNumber(const string& num) const;
+    bool isValidNumber(const std::string& num) const;
     
 public:
-    Lexer(const string& text);
+    Lexer(const std::string& text);
     Token nextToken();
-    vector<Token> tokenize();
+    std::vector<Token> tokenize();
 };
 
 #endif // LEXER_H
