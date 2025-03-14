@@ -1,6 +1,17 @@
 #include "parser.h"
 #include <sstream>
 
+// Helper function for displaying tokens in error messages
+std::string tokenDisplay(const Token& token) {
+    if (token.type == TokenType::END_OF_FILE) {
+        return "EOF";
+    }
+    if (token.lexeme.empty()) {
+        return "unknown token";
+    }
+    return token.lexeme;
+}
+
 Parser::Parser(const std::vector<Token>& toks) 
     : tokens(toks), pos(0), currentToken(TokenType::END_OF_FILE, "") {
     if (!tokens.empty()) {
@@ -18,7 +29,7 @@ void Parser::advance() {
 void Parser::expect(TokenType type, const std::string& message) {
     if (currentToken.type != type) {
         throw std::runtime_error("Parse error: " + message + 
-                                 " (got " + currentToken.lexeme + ")");
+                                 " (got " + tokenDisplay(currentToken) + ")");
     }
     advance();
 }
@@ -32,7 +43,7 @@ std::unique_ptr<ASTNode> Parser::parse() {
     
     if (currentToken.type != TokenType::END_OF_FILE) {
         throw std::runtime_error("Parse error: Unexpected token after expression: " + 
-                                 currentToken.lexeme);
+                                 tokenDisplay(currentToken));
     }
     
     return result;
@@ -87,5 +98,5 @@ std::unique_ptr<ASTNode> Parser::parseFactor() {
     
     // Error: unexpected token
     throw std::runtime_error("Parse error: Expected number or '(', got " + 
-                             currentToken.lexeme);
+                             tokenDisplay(currentToken));
 }
