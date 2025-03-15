@@ -39,6 +39,13 @@ std::unique_ptr<ASTNode> Parser::parse() {
         throw std::runtime_error("Parse error: Empty input");
     }
     
+    // Check for invalid tokens before parsing
+    for (const auto& token : tokens) {
+        if (token.type == TokenType::INVALID) {
+            throw std::runtime_error("Lexer error: Invalid token '" + token.lexeme + "'");
+        }
+    }
+    
     auto result = parseExpression();
     
     if (currentToken.type != TokenType::END_OF_FILE) {

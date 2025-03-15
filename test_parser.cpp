@@ -58,5 +58,11 @@ int main() {
     // Test 10: Error - unmatched parenthesis
     testParse("(3 + 4");
     
+    // Test 11: Error - invalid character
+    testParse("3 + @");
+    
+    // Test 12: Error - invalid number
+    testParse("3.1.4 + 2");
+    
     return 0;
 }
