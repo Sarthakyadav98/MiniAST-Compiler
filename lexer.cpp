@@ -30,6 +30,13 @@ string Lexer::readNumber() {
     return result;
 }
 
+char Lexer::peek() const {
+    if (pos + 1 >= input.length()) {
+        return '\0';
+    }
+    return input[pos + 1];
+}
+
 Token Lexer::nextToken() {
     while (currentChar != '\0') {
         if (isspace(currentChar)) {
@@ -72,8 +79,9 @@ Token Lexer::nextToken() {
         }
         
         // Invalid character
+        char invalidChar = currentChar;
         advance();
-        return Token(TokenType::INVALID, string(1, currentChar));
+        return Token(TokenType::INVALID, string(1, invalidChar));
     }
     
     return Token(TokenType::END_OF_FILE, "");

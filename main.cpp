@@ -17,7 +17,7 @@ std::string tokenTypeToString(TokenType type) {
 }
 
 int main() {
-    std::string expression = "3 + 4 * (2 - 1)";
+    std::string expression = "3 + 4 * ($ - 1)";
     
     std::cout << "Input: " << expression << "\n\n";
     std::cout << "Tokens:\n";
