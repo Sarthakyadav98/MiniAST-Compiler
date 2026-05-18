@@ -6,11 +6,11 @@ std::string tokenTypeToString(TokenType type) {
         case TokenType::NUMBER: return "NUMBER";
         case TokenType::PLUS: return "PLUS";
         case TokenType::MINUS: return "MINUS";
-        case TokenType::STAR: return "STAR";
-        case TokenType::SLASH: return "SLASH";
-        case TokenType::LPAREN: return "LPAREN";
-        case TokenType::RPAREN: return "RPAREN";
-        case TokenType::END: return "END";
+        case TokenType::MULTIPLY: return "MULTIPLY";
+        case TokenType::DIVIDE: return "DIVIDE";
+        case TokenType::LEFT_PAREN: return "LEFT_PAREN";
+        case TokenType::RIGHT_PAREN: return "RIGHT_PAREN";
+        case TokenType::END_OF_FILE: return "END_OF_FILE";
         case TokenType::INVALID: return "INVALID";
         default: return "UNKNOWN";
     }
@@ -28,7 +28,7 @@ int main() {
     for (const auto& token : tokens) {
         if (token.type == TokenType::NUMBER) {
             std::cout << tokenTypeToString(token.type) << "(" << token.value << ") ";
-        } else if (token.type != TokenType::END) {
+        } else if (token.type != TokenType::END_OF_FILE) {
             std::cout << tokenTypeToString(token.type) << " ";
         }
     }

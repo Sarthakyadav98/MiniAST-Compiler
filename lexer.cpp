@@ -53,22 +53,22 @@ Token Lexer::nextToken() {
         
         if (currentChar == '*') {
             advance();
-            return Token(TokenType::STAR, "*");
+            return Token(TokenType::MULTIPLY, "*");
         }
         
         if (currentChar == '/') {
             advance();
-            return Token(TokenType::SLASH, "/");
+            return Token(TokenType::DIVIDE, "/");
         }
         
         if (currentChar == '(') {
             advance();
-            return Token(TokenType::LPAREN, "(");
+            return Token(TokenType::LEFT_PAREN, "(");
         }
         
         if (currentChar == ')') {
             advance();
-            return Token(TokenType::RPAREN, ")");
+            return Token(TokenType::RIGHT_PAREN, ")");
         }
         
         // Invalid character
@@ -76,18 +76,18 @@ Token Lexer::nextToken() {
         return Token(TokenType::INVALID, string(1, currentChar));
     }
     
-    return Token(TokenType::END, "");
+    return Token(TokenType::END_OF_FILE, "");
 }
 
 vector<Token> Lexer::tokenize() {
     vector<Token> tokens;
     Token token = nextToken();
     
-    while (token.type != TokenType::END) {
+    while (token.type != TokenType::END_OF_FILE) {
         tokens.push_back(token);
         token = nextToken();
     }
     
-    tokens.push_back(token); // Add END token
+    tokens.push_back(token); // Add END_OF_FILE token
     return tokens;
 }
