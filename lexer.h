@@ -16,6 +16,7 @@ private:
     void skipWhitespace();
     string readNumber();
     char peek() const;
+    bool isValidNumber(const string& num) const;
     
 public:
     Lexer(const string& text);
