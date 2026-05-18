@@ -2,7 +2,6 @@
 #define TOKEN_H
 
 #include <string>
-using namespace std;
 
 enum class TokenType {
     // Literals
@@ -29,9 +28,9 @@ enum class TokenType {
 
 struct Token {
     TokenType type;
-    string value;
+    std::string lexeme;
     
-    Token(TokenType t, const string& v = "") : type(t), value(v) {}
+    Token(TokenType t, const std::string& lex = "") : type(t), lexeme(lex) {}
 };
 
 #endif // TOKEN_H
