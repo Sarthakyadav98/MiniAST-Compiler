@@ -3,6 +3,8 @@
 
 #include <string>
 #include <memory>
+#include <sstream>
+#include <iomanip>
 
 // Base class for all AST nodes
 class ASTNode {
@@ -19,7 +21,32 @@ public:
     explicit NumberNode(double val) : value(val) {}
     
     std::string toString() const override {
-        return std::to_string(value);
+        std::ostringstream oss;
+        
+        // Check if it's an integer value
+        if (value == static_cast<int>(value)) {
+            oss << static_cast<int>(value);
+        } else {
+            // Format with minimal decimal places
+            oss << std::fixed << std::setprecision(2) << value;
+            std::string result = oss.str();
+            
+            // Remove trailing zeros after decimal point
+            size_t decimal_pos = result.find('.');
+            if (decimal_pos != std::string::npos) {
+                size_t last_nonzero = result.find_last_not_of('0');
+                if (last_nonzero > decimal_pos) {
+                    result = result.substr(0, last_nonzero + 1);
+                }
+                // Remove decimal point if no digits after it
+                if (result.back() == '.') {
+                    result.pop_back();
+                }
+            }
+            return result;
+        }
+        
+        return oss.str();
     }
 };
 
